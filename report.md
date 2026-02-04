@@ -145,14 +145,26 @@ As a baseline, we can use a pretrained model for comparison. Based on the result
 | Model                      | Result |
 |----------------------------|-------------|
 | Baseline Qwen/Qwen2.5-Coder-1.5B-Instruct  | 0.19% valid SQL generation  |
-| Finetuned Qwen/Qwen2.5-Coder-1.5B-Instruct | 89.02% valid SQL generation |
+| Finetuned (3 epochs) Qwen/Qwen2.5-Coder-1.5B-Instruct | 89.02% valid SQL generation |
 
 Based on the syntax, the finetuned model has significantly improved the correctness of the syntax.
 
+Compared to Falcon3 performance, the effect of finetuning is less impactful as finetuning Qwen.
+
+| Model                      | Result |
+|----------------------------|-------------|
+| Baseline tiiuae/Falcon3-1B-Base  | 3.6% valid SQL generation  |
+| Finetuned (3 epochs) tiiuae/Falcon3-1B-Base | 28.79% valid SQL generation |
+
+We also experimented with larger epochs for Qwen, and the result has further improvement. 
+
+| Model                      | Result |
+|----------------------------|-------------|
+| Baseline Qwen/Qwen2.5-Coder-1.5B-Instruct  | 0.19% valid SQL generation  |
+| Finetuned (12 epochs) Qwen/Qwen2.5-Coder-1.5B-Instruct | 96.52% valid SQL generation |
+
 ## Future Work
 Several directions can be explored to further improve model performance and robustness in Text2SQL generation:
-- **Model Exploration**: **StarCoder2-3B** is a model alternative compared to Qwen2.5-Coder-1.5B-Instruct. Theoretically, the larger model should have a better capacity for learning. See https://huggingface.co/bigcode/starcoder2-3b.
-
 - **Evaluation Metrics Enhancement** 
     - **AST-based syntax equivalence**: Instead of string matching, abstract syntax tree (AST) comparisons can be used to account for semantically equivalent SQL queries
     - **Execution-based Metrics**:
@@ -160,13 +172,15 @@ Several directions can be explored to further improve model performance and robu
       * **VES-style metrics** to better quantify semantic correctness and schema grounding, particularly in cases of schema hallucination.
       * See https://arxiv.org/pdf/2305.03111
 
+- **Expand Target Modules**: Including `k_proj` could further refine the attention mechanism of the model.
+
 - **Quantization Strategy Exploration**: Future experiments could explore **FP4 quantization** to assess whether alternative low-precision formats offer improved numerical stability or generation quality.
 
 - **LoRA Capacity Scaling**: Increasing the LoRA rank (`r`) may allow the adapters to capture more task-specific information, potentially improving complex SQL generation.
 
-- **Training Dynamics**: Increasing epochs could further improve the quality of the fine-tuned model. We have tried adding epochs on Qwen and the validity of SQL syntax increases to 96.52% (See `DOKU_Text2SQL_Falcon.ipynb`). Due to time limitation, we cannot implement the same for Falcon 3 model.
+- **Model Exploration**: **StarCoder2-3B** is a model alternative compared to Qwen2.5-Coder-1.5B-Instruct or Falcon 3B base model. Theoretically, the larger model should have a better capacity for learning more sophisticated pattern. See https://huggingface.co/bigcode/starcoder2-3b.
 
-- **Expand Target Modules**: Including `k_proj` could further refine the attention mechanism of the model. 
+- **Training Dynamics**: Increasing epochs could further improve the quality of the fine-tuned model. We have tried adding epochs on Qwen and the validity of SQL syntax increases to 96.52% (See `DOKU_Text2SQL_Falcon.ipynb`). Due to time limitation, we cannot implement the same for Falcon 3 model. 
 
 
 ## Conclusion

@@ -14,7 +14,8 @@ This project is a case study to see the feasibility of training LLM up to 3B par
 ## Available Models
 We experiment with:
 - `tiiuae/Falcon3-1B-Base` - https://huggingface.co/tiiuae/Falcon3-1B-Base
-- `Qwen/Qwen2.5-Coder-1.5B-Instruct` - https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct
+- `Qwen/Qwen2.5-Coder-1.5B-Instruct` (3 epochs) - https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct
+- `Qwen/Qwen2.5-Coder-1.5B-Instruct` (12 epochs) - https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct
 
 ## Report
 See `report.md` or `Text2SQL_Report_from_Malvin.pdf` for insights in this case study. 
